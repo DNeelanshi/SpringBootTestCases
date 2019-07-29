@@ -72,7 +72,7 @@ public class TrackController {
 //    }
 
     @DeleteMapping("track/{id}")
-    public 	ResponseEntity<?> delete(@PathVariable long id){
+    public 	ResponseEntity<?> delete(@PathVariable(value = "id") long id){
 
         ResponseEntity responseEntity;
 
@@ -99,7 +99,7 @@ public class TrackController {
 
     @ExceptionHandler(TrackNotFoundException.class)
     @PutMapping("track/{id}")
-    public ResponseEntity<?> updateTrack( int id,Track track){
+    public ResponseEntity<?> updateTrack(@PathVariable(value = "id") int id,Track track){
 
         ResponseEntity responseEntity;
 
@@ -117,7 +117,7 @@ public class TrackController {
     }
 
     @PostMapping("track/{name}")
-    public ResponseEntity<?> getTrackbyName(@PathVariable String name) {
+    public ResponseEntity<?> getTrackbyName(@PathVariable(value = "name") String name) {
 
         ResponseEntity responseEntity;
 
