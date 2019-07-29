@@ -7,10 +7,12 @@ import com.stackroute.muzicx.repository.TrackRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.core.task.TaskRejectedException;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,7 @@ import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+@RunWith(SpringRunner.class)
 public class TrackServiceImplTest {
 
     Track track;
@@ -67,20 +70,14 @@ public class TrackServiceImplTest {
         Assert.assertEquals(list,tracklist);
     }
 
-
-//    	Test for deleteTrack service method
     @Test
-    public void deleteTrack() throws TrackAlreadyExistsException {
-        Track track1 = new Track(304,"dbb","hhd");
-        trackService.saveTrack(track);
-        trackService.saveTrack(track1);
-        trackService.deleteTrack(304);
-        Assert.assertEquals(1,trackService.deleteTrack(304));
-
-        //verify here verifies that trackRepository deleteById method is only called once
-        verify(trackRepository,times(1)).deleteById(track1.getId());
+    public void deleteTrackTest()
+    {
+        Track track=new Track(57,"DeleteTrack","Deleted");
+        trackRepository.delete(track);
+        boolean result=trackRepository.existsById(57);
+        Assert.assertEquals(false,result);
     }
-
     //	Test for updateTrack service method
     @Test
     public void updateTrack() throws TrackNotFoundException {

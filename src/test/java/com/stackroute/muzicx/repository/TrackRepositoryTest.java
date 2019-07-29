@@ -19,73 +19,59 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 public class TrackRepositoryTest {
-
     @Autowired
     TrackRepository trackRepository;
     Track track;
-
-    List<Track> trackList= null;
-
-
     @Before
-    public void setUp() {
-        track = new Track(101,"songnew","good");
+    public void setUp()
+    {
+        track = new Track();
+        track.setId(101);
+        track.setName("John");
+        track.setComment("sadsdsad Jenny");
     }
-
     @After
-    public void tearDown() {
+    public void tearDown(){
         trackRepository.deleteAll();
     }
-
-
-    //	method to check save() method of repository
     @Test
-    public void testSaveTrack(){
+    public void testSaveUser(){
         trackRepository.save(track);
-        Assert.assertEquals(101,trackRepository.findById(track.getId()).get());
-
+        Track fetchUser = trackRepository.findById(track.getId()).get();
+        Assert.assertEquals(101,fetchUser.getId());
     }
-
-    //	method to check save() method of repository
     @Test
-    public void testSaveTrackFailure(){
-        Track testUser = new Track(102,"song3","amazing");
+    public void testSaveUserFailure(){
+        Track testUser = new Track(34,"Harry123","Comments");
         trackRepository.save(track);
         Track fetchUser = trackRepository.findById(track.getId()).get();
         Assert.assertNotSame(testUser,track);
     }
-
-    //	method to check deleteById() method of repository
-    @Test(expected = NoSuchElementException.class)
-    public void testDeleteTrack(){
-        Track testUser = new Track(102,"song4","wonderful");
-        trackRepository.save(testUser);
-        trackRepository.deleteById(testUser.getId());
-        Assert.assertNotEquals(testUser,trackRepository.findById(testUser.getId()).get());
-    }
-
-    //	method to check update by id and existsById() method of repository
     @Test
-    public void testUpdateTrack(){
-        trackRepository.save(track);
-        trackRepository.existsById(track.getId());
-        track.setComment("good");
-        trackRepository.save(track);
-        Track fetchUser = trackRepository.findById(track.getId()).get();
-        Assert.assertEquals("good",fetchUser.getComment());
-
+    public void testGetAllUser(){
+        Track u = new Track(10,"Johny","abc");
+        Track u1 = new Track(11,"Harry","efg");
+        trackRepository.save(u);
+        trackRepository.save(u1);
+        List<Track> list = trackRepository.findAll();
+        Assert.assertEquals("Johny",list.get(0).getName());
     }
-
-    //	method to check findAll() method of repository
     @Test
-    public void testGetAllTrack(){
-        Track track1 = new Track(102,"newsong","good song");
-        Track track2 = new Track(103,"my song","excellent one");
-        trackRepository.save(track1);
-        trackRepository.save(track2);
-
-        Track trackList = trackRepository.findById(102).get();
-        Assert.assertEquals("newsong",trackList.getName());
-
+    public void updateTrackTest()
+    {
+        Track track=new Track(130,"Update","UpdatingTracks");
+        trackRepository.save(track);
+        trackRepository.findById(track.getId()).get().setName("UpdatedTrackInName");
+        List<Track> list=trackRepository.findAll();
+        Assert.assertEquals("UpdatedTrackInName",list.get(0).getName());
+    }
+    @Test
+    public void deleteTrackTest()
+    {
+        Track track=new Track(130,"Delete","DeleteTrack");
+        trackRepository.save(track);
+        trackRepository.deleteById(130);
+        boolean result=trackRepository.existsById(139);
+        Assert.assertEquals(false,result);
     }
 }
