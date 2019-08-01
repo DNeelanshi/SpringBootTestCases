@@ -31,6 +31,7 @@ public class TrackServiceImpl implements TrackService {
         this.trackRepository = trackRepository;
     }
 
+     //method to sav ethe track in database
     @Override
     public Track saveTrack(Track track) throws TrackAlreadyExistsException {
 
@@ -44,13 +45,14 @@ public class TrackServiceImpl implements TrackService {
         }
         return track1;
     }
-
+ //method to get all tracks
     @Override
     public List<Track> getAllTracks() throws TrackNotFoundException {
 
         return (List<Track>) trackRepository.findAll();
     }
 
+     //method to delete a track
     @Override
     public int deleteTrack(long id) {
         System.out.println(id);
@@ -80,12 +82,14 @@ public class TrackServiceImpl implements TrackService {
         return trackRepository.findById(id).orElse(null);
     }
 
+     //method to get a  track name
     @Override
     public List<Track> getTrackbyName(String name) {
 
         return trackRepository.getTrackbyName(name);
     }
-
+    
+     //method to update the track
     @Override
     public Track UpdateTrack(int id, Track track) throws TrackNotFoundException {
 
@@ -108,6 +112,7 @@ public class TrackServiceImpl implements TrackService {
 //        re
 //    }
 
+     //method to get the tracks from external api and save in our ddatabse as per our schema by mapping
     public void getTopTracks()
     {
         final String uri = "http://ws.audioscrobbler.com/2.0/?method=geo.gettoptracks&country=spain&api_key=90aaa37a824cb860430cb9851bdb7902&format=json";
