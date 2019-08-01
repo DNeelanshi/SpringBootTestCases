@@ -32,6 +32,7 @@ public class TrackController {
     }
 
 
+    //handler methos to save track
     @ExceptionHandler(TrackAlreadyExistsException.class)
     @PostMapping("track")
     public ResponseEntity<?> saveTrack( Track track){
@@ -52,6 +53,7 @@ public class TrackController {
 
     }
 
+     //handler methos to get tracks
     @GetMapping("track")
     public  ResponseEntity<?> getallTracks(){
         ResponseEntity responseEntity;
@@ -71,6 +73,7 @@ public class TrackController {
 //        return trackService.getTopTracks();
 //    }
 
+     //handler methos to delete track
     @DeleteMapping("track/{id}")
     public 	ResponseEntity<?> delete(@PathVariable(value = "id") long id){
 
@@ -97,6 +100,7 @@ public class TrackController {
 
     }
 
+     //handler methos to update track
     @ExceptionHandler(TrackNotFoundException.class)
     @PutMapping("track/{id}")
     public ResponseEntity<?> updateTrack(@PathVariable(value = "id") int id,Track track){
@@ -116,6 +120,7 @@ public class TrackController {
 
     }
 
+     //handler methos to get track by name
     @PostMapping("track/{name}")
     public ResponseEntity<?> getTrackbyName(@PathVariable(value = "name") String name) {
 
@@ -132,6 +137,8 @@ public class TrackController {
         return responseEntity;
 
     }
+    
+     //handler methos to get track by id
 
     @GetMapping("track/{id}")
     //handler to get a track by id
