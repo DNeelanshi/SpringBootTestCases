@@ -34,12 +34,14 @@ public class TrackRepositoryTest {
     public void tearDown(){
         trackRepository.deleteAll();
     }
+    //checking the test case for saving user
     @Test
     public void testSaveUser(){
         trackRepository.save(track);
         Track fetchUser = trackRepository.findById(track.getId()).get();
         Assert.assertEquals(101,fetchUser.getId());
     }
+    //checking the test case for saving user failure
     @Test
     public void testSaveUserFailure(){
         Track testUser = new Track(34,"Harry123","Comments");
@@ -47,6 +49,7 @@ public class TrackRepositoryTest {
         Track fetchUser = trackRepository.findById(track.getId()).get();
         Assert.assertNotSame(testUser,track);
     }
+    //checking the test case for getting all users
     @Test
     public void testGetAllUser(){
         Track u = new Track(10,"Johny","abc");
@@ -56,6 +59,7 @@ public class TrackRepositoryTest {
         List<Track> list = trackRepository.findAll();
         Assert.assertEquals("Johny",list.get(0).getName());
     }
+    //checking the test case for updating user
     @Test
     public void updateTrackTest()
     {
